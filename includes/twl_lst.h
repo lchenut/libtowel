@@ -71,6 +71,7 @@ t_lst						*twl_lst_findall(t_lst *lst,
 /*
 ** Move
 */
+void						twl_lst_push_sorted(t_lst *lst, void *data, int (*cmp_fn)(void *data, void *data1));
 
 void						twl_lst_push(t_lst *lst, void *data);
 void						*twl_lst_pop(t_lst *lst);
