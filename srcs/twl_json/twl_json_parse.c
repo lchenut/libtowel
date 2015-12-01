@@ -149,7 +149,7 @@ static char			*get_primitive_token(char *json_str)
 
 	result = twl_strchr_any(json_str, JSON_STR_END_OF_PRIMITIVE);
 	if (result == NULL)
-		return (json_str);
+		return (twl_strdup(json_str));
 	len = result - json_str;
 	token = twl_strnew(len);
 	twl_strncpy(token, json_str, len);

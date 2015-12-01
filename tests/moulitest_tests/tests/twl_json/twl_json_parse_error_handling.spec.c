@@ -26,9 +26,12 @@ mt_test_parse(num14, "{{}");
 mt_test_parse(num15, "{}}");
 mt_test_parse(num16, "{");
 mt_test_parse(num17, "}");
-mt_test_parse(num21, "{,false}");
-mt_test_parse(num22, "{true,}");
-mt_test_parse(num23, "{,}");
+mt_test_parse(num18, "{,false}");
+mt_test_parse(num19, "{true,}");
+mt_test_parse(num20, "[\"ab\"c\"]");
+mt_test_parse(num21, "[][]");
+mt_test_parse(num22, "{}{}");
+mt_test_parse(num23, "");
 
 void	suite_twl_json_parse_error_handling(t_suite *suite)
 {
@@ -50,7 +53,34 @@ void	suite_twl_json_parse_error_handling(t_suite *suite)
 	SUITE_ADD_TEST(suite, test_num15);
 	SUITE_ADD_TEST(suite, test_num16);
 	SUITE_ADD_TEST(suite, test_num17);
+	SUITE_ADD_TEST(suite, test_num18);
+	SUITE_ADD_TEST(suite, test_num19);
+	SUITE_ADD_TEST(suite, test_num20);
 	SUITE_ADD_TEST(suite, test_num21);
 	SUITE_ADD_TEST(suite, test_num22);
 	SUITE_ADD_TEST(suite, test_num23);
+	// SUITE_ADD_TEST(suite, test_num24);
+	// SUITE_ADD_TEST(suite, test_num25);
+	// SUITE_ADD_TEST(suite, test_num26);
+	// SUITE_ADD_TEST(suite, test_num27);
+	// SUITE_ADD_TEST(suite, test_num28);
+	// SUITE_ADD_TEST(suite, test_num29);
+	// SUITE_ADD_TEST(suite, test_num30);
+	// SUITE_ADD_TEST(suite, test_num31);
+	// SUITE_ADD_TEST(suite, test_num32);
+	// SUITE_ADD_TEST(suite, test_num33);
+	// SUITE_ADD_TEST(suite, test_num34);
+	// SUITE_ADD_TEST(suite, test_num35);
+	// SUITE_ADD_TEST(suite, test_num36);
+	// SUITE_ADD_TEST(suite, test_num37);
+	// SUITE_ADD_TEST(suite, test_num38);
+	// SUITE_ADD_TEST(suite, test_num39);
+	// SUITE_ADD_TEST(suite, test_num40);
+	// SUITE_ADD_TEST(suite, test_num41);
+	// SUITE_ADD_TEST(suite, test_num42);
+	// SUITE_ADD_TEST(suite, test_num43);
+	// SUITE_ADD_TEST(suite, test_num44);
+	// SUITE_ADD_TEST(suite, test_num45);
+	// SUITE_ADD_TEST(suite, test_num46);
+	// SUITE_ADD_TEST(suite, test_num47);
 }

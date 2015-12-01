@@ -170,12 +170,9 @@ static void test_white_space_object(t_test *test)
 	t_jnode			*node;
 	char			*json_dump_res;
 
-	// printf("===============\n");
-	// printf("str  '%s'\n", json_str);
 	node = twl_json_parse(json_str);
 	json_dump_res = twl_json_dump(node);
 
-	// printf("dump %s\n", json_dump_res);
 	mt_assert(node && twl_strcmp(json_dump_res, dump_expected) == 0);
 	twl_jnode_del(node);
 }
@@ -187,12 +184,9 @@ static void test_white_space_complex(t_test *test)
 	t_jnode			*node;
 	char			*json_dump_res;
 
-	// printf("===============\n");
-	// printf("str  '%s'\n", json_str);
 	node = twl_json_parse(json_str);
 	json_dump_res = twl_json_dump(node);
 
-	// printf("dump %s\n", json_dump_res);
 	mt_assert(node && twl_strcmp(json_dump_res, dump_expected) == 0);
 	twl_jnode_del(node);
 }
