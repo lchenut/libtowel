@@ -38,7 +38,10 @@ int					twl_json_parse_array(t_jnode *arr_node, char *json_str)
 		{
 			node = twl_json_parse_do(json_str, &len);
 			if (!node)
-				twl_xprintf("array syntax error: %s\n", json_str);
+			{
+				twl_lprintf("[syntax error] array elem: %s\n", json_str);
+				return -1;
+			}
 			twl_jnode_array_push(arr_node, node);
 			json_str += len;
 			while (twl_strchr(JSON_WHITE_SPACE_CHARS, *json_str))
@@ -46,7 +49,10 @@ int					twl_json_parse_array(t_jnode *arr_node, char *json_str)
 			if (*json_str == ']')
 				break ;
 			if (*json_str != ',')
-				twl_xprintf("[syntax error] expect : ']'\n");
+			{
+				twl_lprintf("[syntax error] expect: ']'\n");
+				return -1;
+			}
 			json_str++;
 		}
 	}
@@ -59,9 +65,21 @@ static char			*twl_json_parse_get_obj_key(char *json_str, int *len_ptr)
 	char			*key;
 
 	key = twl_str_before_any_char(json_str, ":");
+	if (key == NULL)
+		return (NULL);
 	*len_ptr = twl_strlen(key) + 1;
 	key = twl_strtrim_chars_free(key, JSON_WHITE_SPACE_CHARS);
+	if (*key != '\"' || key[twl_strlen(key) - 1] != '\"')
+	{
+		free(key);
+		return (NULL);
+	}
 	key = twl_strtrim_chars_free(key, "\"");
+	if (twl_strchr(key, '\"') || *key == '\0')
+	{
+		free(key);
+		return (NULL);
+	}
 	return (key);
 }
 
@@ -81,6 +99,8 @@ int					twl_json_parse_object(t_jnode *obj_node, char *json_str)
 		while (true)
 		{
 			key = twl_json_parse_get_obj_key(json_str, &len);
+			if (key == NULL)
+				return (-1);
 			json_str += len;
 			node = twl_json_parse_do(json_str, &len);
 			if (!node)
@@ -183,12 +203,12 @@ static t_jnode		*twl_json_parse_do(char *json_str, int *len_ptr)
 	if (*json_str == '[')
 	{
 		node = twl_jnode_new_array();
-		*len_ptr = twl_json_parse_array(node, json_str);;
+		*len_ptr = twl_json_parse_array(node, json_str);
 	}
 	else if (*json_str == '{')
 	{
 		node = twl_jnode_new_object();
-		*len_ptr = twl_json_parse_object(node, json_str);;
+		*len_ptr = twl_json_parse_object(node, json_str);
 	}
 	else if (*json_str == '"')
 	{
@@ -198,7 +218,10 @@ static t_jnode		*twl_json_parse_do(char *json_str, int *len_ptr)
 	{
 		node = twl_json_parse_primitive(json_str, len_ptr);
 	}
+	if (*len_ptr == -1)
+		return (NULL);
 	*len_ptr += skiped;
+
 	return node;
 }
 
@@ -208,5 +231,11 @@ t_jnode				*twl_json_parse(char *json_str)
 	t_jnode			*node;
 
 	node = twl_json_parse_do(json_str, &len);
+	if (!node)
+		return (NULL);
+	while (json_str[len] && twl_strchr(JSON_WHITE_SPACE_CHARS, json_str[len]))
+		len++;
+	if (twl_strlen(json_str) != (size_t)len)
+		return (NULL);
 	return node;
 }
